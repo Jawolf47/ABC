@@ -1,65 +1,198 @@
-import Image from "next/image";
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardGrid } from "@/components/ui/card"
+import { Target, Shield, Shirt, Users, Clock, ArrowRight, Star, Crosshair } from "lucide-react"
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <section className="relative overflow-hidden bg-zinc-950">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542125387-c71274d94f0b?q=80&w=2070')] bg-cover bg-center opacity-20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-zinc-950/60" />
+        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+          <div className="max-w-2xl">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400">
+              <Star className="h-3.5 w-3.5" />
+              Premium Archery & Survival Experience
+            </div>
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Find Your{" "}
+              <span className="text-amber-500">Target</span>
+              , Master Your{" "}
+              <span className="text-amber-500">Survival</span>
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-zinc-400">
+              Alpha Bear Club is your premier destination for archery practice, elite survival products,
+              and tactical training. Whether you are a beginner or a seasoned pro, step into the range
+              and unleash your potential.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link href="/booking">
+                <Button size="lg" className="gap-2">
+                  Book a Session <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+              <Link href="/store">
+                <Button variant="outline" size="lg" className="border-zinc-700 text-zinc-200 hover:bg-zinc-800 hover:text-white">
+                  Shop Gear
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+            What We Offer
+          </h2>
+          <p className="mt-4 text-lg text-zinc-600">
+            Everything you need to train, compete, and survive.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <Card className="group relative overflow-hidden border-amber-100">
+            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
+              <Target className="h-7 w-7" />
+            </div>
+            <h3 className="mt-4 text-xl font-semibold text-zinc-900">Archery Range</h3>
+            <p className="mt-2 text-zinc-600">
+              State-of-the-art indoor range with targets from 10 to 50 yards. Walk-ins welcome for
+              individual practice or book lane time in advance.
+            </p>
+            <div className="mt-4 flex items-center gap-2 text-sm font-medium text-amber-600">
+              From $15/session <ArrowRight className="h-3.5 w-3.5" />
+            </div>
+          </Card>
+
+          <Card className="group relative overflow-hidden border-amber-100">
+            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
+              <Shield className="h-7 w-7" />
+            </div>
+            <h3 className="mt-4 text-xl font-semibold text-zinc-900">Elite Survival Gear</h3>
+            <p className="mt-2 text-zinc-600">
+              Curated selection of premium survival equipment, tactical gear, and outdoor essentials.
+              From bushcraft tools to emergency kits.
+            </p>
+            <div className="mt-4 flex items-center gap-2 text-sm font-medium text-amber-600">
+              Shop Now <ArrowRight className="h-3.5 w-3.5" />
+            </div>
+          </Card>
+
+          <Card className="group relative overflow-hidden border-amber-100 sm:col-span-2 lg:col-span-1">
+            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
+              <Users className="h-7 w-7" />
+            </div>
+            <h3 className="mt-4 text-xl font-semibold text-zinc-900">Group Events</h3>
+            <p className="mt-2 text-zinc-600">
+              Birthday parties, corporate team building, and private group sessions. Plan your event
+              in advance and we will handle the rest.
+            </p>
+            <div className="mt-4 flex items-center gap-2 text-sm font-medium text-amber-600">
+              Plan Event <ArrowRight className="h-3.5 w-3.5" />
+            </div>
+          </Card>
         </div>
-      </main>
-    </div>
-  );
+      </section>
+
+      <section className="bg-zinc-900 py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Walk-ins Welcome.
+                <br />
+                <span className="text-amber-500">Book Ahead Guaranteed.</span>
+              </h2>
+              <p className="mt-4 text-lg leading-8 text-zinc-400">
+                Got a sudden urge to hit the range? Drop by anytime during business hours for
+                individual walk-in sessions. For guaranteed lane availability or group events,
+                book online in advance.
+              </p>
+              <div className="mt-8 space-y-4">
+                {[
+                  { icon: Clock, text: "Walk-in individual sessions available daily" },
+                  { icon: Target, text: "Reserve lanes up to 2 weeks in advance" },
+                  { icon: Users, text: "Group events planned and booked ahead" },
+                  { icon: Crosshair, text: "Equipment rental included with all sessions" },
+                ].map((item) => (
+                  <div key={item.text} className="flex items-start gap-3">
+                    <item.icon className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
+                    <span className="text-zinc-300">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link href="/booking">
+                  <Button size="lg">Book Now</Button>
+                </Link>
+                <Link href="/events">
+                  <Button variant="outline" size="lg" className="border-zinc-700 text-zinc-200 hover:bg-zinc-800 hover:text-white">
+                    Explore Events
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="aspect-square rounded-2xl bg-zinc-800" />
+              <div className="absolute -bottom-4 -right-4 rounded-2xl border border-amber-500/30 bg-zinc-900 p-6">
+                <p className="text-3xl font-bold text-amber-500">50+</p>
+                <p className="text-sm text-zinc-400">Years Combined Experience</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
+            Shop by Category
+          </h2>
+          <p className="mt-4 text-lg text-zinc-600">
+            Premium gear for every discipline.
+          </p>
+        </div>
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <Link href="/store?category=archery">
+            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-amber-50 to-amber-100/50 p-10 transition-all hover:shadow-lg">
+              <Target className="h-10 w-10 text-amber-600" />
+              <h3 className="mt-4 text-2xl font-bold text-zinc-900">Archery Equipment</h3>
+              <p className="mt-2 text-zinc-600">
+                Bows, arrows, targets, and accessories for all skill levels.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-amber-600 group-hover:gap-2 transition-all">
+                Browse Archery <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </Card>
+          </Link>
+          <Link href="/store?category=survival">
+            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-zinc-800 to-zinc-900 p-10 transition-all hover:shadow-lg">
+              <Shield className="h-10 w-10 text-amber-500" />
+              <h3 className="mt-4 text-2xl font-bold text-white">Survival Gear</h3>
+              <p className="mt-2 text-zinc-400">
+                Bushcraft tools, emergency kits, tactical equipment, and outdoor essentials.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-amber-500 group-hover:gap-2 transition-all">
+                Browse Survival <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </Card>
+          </Link>
+          <Link href="/store?category=apparel">
+            <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-green-100 to-green-200/50 p-10 transition-all hover:shadow-lg">
+              <Shirt className="h-10 w-10 text-green-600" />
+              <h3 className="mt-4 text-2xl font-bold text-zinc-900">Apparel</h3>
+              <p className="mt-2 text-zinc-600">
+                Caps, t-shirts, hoodies, and beanies with the Alpha Bear Club logo.
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-green-600 group-hover:gap-2 transition-all">
+                Browse Apparel <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </Card>
+          </Link>
+        </div>
+      </section>
+    </>
+  )
 }
