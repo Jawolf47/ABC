@@ -14,8 +14,8 @@ const footerLinks = {
   ],
   Support: [
     { href: "/about", label: "Contact" },
-    { href: "/about", label: "FAQ" },
-    { href: "/about", label: "Policies" },
+    { href: "/faq", label: "FAQ" },
+    { href: "/policies", label: "Policies" },
   ],
 }
 
