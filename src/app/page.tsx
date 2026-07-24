@@ -1,43 +1,75 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardGrid } from "@/components/ui/card"
-import { Target, Shield, Shirt, Users, Clock, ArrowRight, Star, Crosshair } from "lucide-react"
+import { Target, Shield, Shirt, Users, Clock, ArrowRight, Star, Crosshair, Zap, Calendar, Award } from "lucide-react"
 
 export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden bg-zinc-950">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542125387-c71274d94f0b?q=80&w=2070')] bg-cover bg-center opacity-20" />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          <source src="https://videos.pexels.com/video-files/6668847/hd.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-zinc-950/60" />
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
-          <div className="max-w-2xl">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400">
-              <Star className="h-3.5 w-3.5" />
-              Premium Archery & Survival Experience
+          <div className="flex items-center gap-12 lg:flex-row flex-col">
+            <div className="max-w-2xl shrink-0">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400">
+                <Star className="h-3.5 w-3.5" />
+                Premium Archery & Survival Experience
+              </div>
+              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                Find Your{" "}
+                <span className="text-amber-500">Target</span>
+                , Master Your{" "}
+                <span className="text-amber-500">Survival</span>
+              </h1>
+              <p className="mt-6 text-lg leading-8 text-zinc-400">
+                Alpha Bear Club is your premier destination for archery practice, elite survival products,
+                and tactical training. Whether you are a beginner or a seasoned pro, step into the range
+                and unleash your potential.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link href="/booking">
+                  <Button size="lg" className="gap-2">
+                    Book a Session <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link href="/store">
+                  <Button variant="outline" size="lg" className="border-zinc-700 text-zinc-200 hover:bg-zinc-800 hover:text-white">
+                    Shop Gear
+                  </Button>
+                </Link>
+              </div>
             </div>
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Find Your{" "}
-              <span className="text-amber-500">Target</span>
-              , Master Your{" "}
-              <span className="text-amber-500">Survival</span>
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-zinc-400">
-              Alpha Bear Club is your premier destination for archery practice, elite survival products,
-              and tactical training. Whether you are a beginner or a seasoned pro, step into the range
-              and unleash your potential.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link href="/booking">
-                <Button size="lg" className="gap-2">
-                  Book a Session <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="/store">
-                <Button variant="outline" size="lg" className="border-zinc-700 text-zinc-200 hover:bg-zinc-800 hover:text-white">
-                  Shop Gear
-                </Button>
-              </Link>
+            <div className="shrink-0">
+              <img src="/logo.png" alt="Alpha Bear Club" className="h-48 w-auto object-contain opacity-90 sm:h-56 lg:h-64" />
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-zinc-800 bg-zinc-900">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            {[
+              { value: "10-50", label: "Yard Range Lanes", icon: Target },
+              { value: "$20", label: "Per Session", icon: Zap },
+              { value: "5+", label: "Years Experience", icon: Award },
+              { value: "24/7", label: "Online Booking", icon: Calendar },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <stat.icon className="mx-auto mb-2 h-5 w-5 text-amber-500" />
+                <p className="text-2xl font-bold text-white sm:text-3xl">{stat.value}</p>
+                <p className="mt-1 text-sm text-zinc-400">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -62,7 +94,7 @@ export default function HomePage() {
               individual practice or book lane time in advance.
             </p>
             <div className="mt-4 flex items-center gap-2 text-sm font-medium text-amber-600">
-              From $15/session <ArrowRight className="h-3.5 w-3.5" />
+              From $20/session <ArrowRight className="h-3.5 w-3.5" />
             </div>
           </Card>
 
@@ -135,9 +167,13 @@ export default function HomePage() {
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-square rounded-2xl bg-zinc-800" />
+              <img
+                src="https://images.pexels.com/photos/18278542/pexels-photo-18278542.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Archer aiming indoors at Alpha Bear Club range"
+                className="aspect-square rounded-2xl object-cover"
+              />
               <div className="absolute -bottom-4 -right-4 rounded-2xl border border-amber-500/30 bg-zinc-900 p-6">
-                <p className="text-3xl font-bold text-amber-500">50+</p>
+                <p className="text-3xl font-bold text-amber-500">5+</p>
                 <p className="text-sm text-zinc-400">Years Combined Experience</p>
               </div>
             </div>
