@@ -52,6 +52,8 @@ export type ShootingProgressMinAggregateOutputType = {
   score: number | null
   maxScore: number | null
   accuracy: number | null
+  endsData: string | null
+  bowType: string | null
   notes: string | null
   imageUrl: string | null
   createdAt: Date | null
@@ -67,6 +69,8 @@ export type ShootingProgressMaxAggregateOutputType = {
   score: number | null
   maxScore: number | null
   accuracy: number | null
+  endsData: string | null
+  bowType: string | null
   notes: string | null
   imageUrl: string | null
   createdAt: Date | null
@@ -82,6 +86,8 @@ export type ShootingProgressCountAggregateOutputType = {
   score: number
   maxScore: number
   accuracy: number
+  endsData: number
+  bowType: number
   notes: number
   imageUrl: number
   createdAt: number
@@ -115,6 +121,8 @@ export type ShootingProgressMinAggregateInputType = {
   score?: true
   maxScore?: true
   accuracy?: true
+  endsData?: true
+  bowType?: true
   notes?: true
   imageUrl?: true
   createdAt?: true
@@ -130,6 +138,8 @@ export type ShootingProgressMaxAggregateInputType = {
   score?: true
   maxScore?: true
   accuracy?: true
+  endsData?: true
+  bowType?: true
   notes?: true
   imageUrl?: true
   createdAt?: true
@@ -145,6 +155,8 @@ export type ShootingProgressCountAggregateInputType = {
   score?: true
   maxScore?: true
   accuracy?: true
+  endsData?: true
+  bowType?: true
   notes?: true
   imageUrl?: true
   createdAt?: true
@@ -247,6 +259,8 @@ export type ShootingProgressGroupByOutputType = {
   score: number | null
   maxScore: number | null
   accuracy: number | null
+  endsData: string | null
+  bowType: string | null
   notes: string | null
   imageUrl: string | null
   createdAt: Date
@@ -285,6 +299,8 @@ export type ShootingProgressWhereInput = {
   score?: Prisma.IntNullableFilter<"ShootingProgress"> | number | null
   maxScore?: Prisma.IntNullableFilter<"ShootingProgress"> | number | null
   accuracy?: Prisma.FloatNullableFilter<"ShootingProgress"> | number | null
+  endsData?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
+  bowType?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
   notes?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ShootingProgress"> | Date | string
@@ -301,6 +317,8 @@ export type ShootingProgressOrderByWithRelationInput = {
   score?: Prisma.SortOrderInput | Prisma.SortOrder
   maxScore?: Prisma.SortOrderInput | Prisma.SortOrder
   accuracy?: Prisma.SortOrderInput | Prisma.SortOrder
+  endsData?: Prisma.SortOrderInput | Prisma.SortOrder
+  bowType?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -320,6 +338,8 @@ export type ShootingProgressWhereUniqueInput = Prisma.AtLeast<{
   score?: Prisma.IntNullableFilter<"ShootingProgress"> | number | null
   maxScore?: Prisma.IntNullableFilter<"ShootingProgress"> | number | null
   accuracy?: Prisma.FloatNullableFilter<"ShootingProgress"> | number | null
+  endsData?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
+  bowType?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
   notes?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ShootingProgress"> | Date | string
@@ -336,6 +356,8 @@ export type ShootingProgressOrderByWithAggregationInput = {
   score?: Prisma.SortOrderInput | Prisma.SortOrder
   maxScore?: Prisma.SortOrderInput | Prisma.SortOrder
   accuracy?: Prisma.SortOrderInput | Prisma.SortOrder
+  endsData?: Prisma.SortOrderInput | Prisma.SortOrder
+  bowType?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -359,6 +381,8 @@ export type ShootingProgressScalarWhereWithAggregatesInput = {
   score?: Prisma.IntNullableWithAggregatesFilter<"ShootingProgress"> | number | null
   maxScore?: Prisma.IntNullableWithAggregatesFilter<"ShootingProgress"> | number | null
   accuracy?: Prisma.FloatNullableWithAggregatesFilter<"ShootingProgress"> | number | null
+  endsData?: Prisma.StringNullableWithAggregatesFilter<"ShootingProgress"> | string | null
+  bowType?: Prisma.StringNullableWithAggregatesFilter<"ShootingProgress"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"ShootingProgress"> | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"ShootingProgress"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ShootingProgress"> | Date | string
@@ -373,6 +397,8 @@ export type ShootingProgressCreateInput = {
   score?: number | null
   maxScore?: number | null
   accuracy?: number | null
+  endsData?: string | null
+  bowType?: string | null
   notes?: string | null
   imageUrl?: string | null
   createdAt?: Date | string
@@ -389,6 +415,8 @@ export type ShootingProgressUncheckedCreateInput = {
   score?: number | null
   maxScore?: number | null
   accuracy?: number | null
+  endsData?: string | null
+  bowType?: string | null
   notes?: string | null
   imageUrl?: string | null
   createdAt?: Date | string
@@ -403,6 +431,8 @@ export type ShootingProgressUpdateInput = {
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  endsData?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bowType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -419,6 +449,8 @@ export type ShootingProgressUncheckedUpdateInput = {
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  endsData?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bowType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -434,6 +466,8 @@ export type ShootingProgressCreateManyInput = {
   score?: number | null
   maxScore?: number | null
   accuracy?: number | null
+  endsData?: string | null
+  bowType?: string | null
   notes?: string | null
   imageUrl?: string | null
   createdAt?: Date | string
@@ -448,6 +482,8 @@ export type ShootingProgressUpdateManyMutationInput = {
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  endsData?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bowType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -463,6 +499,8 @@ export type ShootingProgressUncheckedUpdateManyInput = {
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  endsData?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bowType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -488,6 +526,8 @@ export type ShootingProgressCountOrderByAggregateInput = {
   score?: Prisma.SortOrder
   maxScore?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
+  endsData?: Prisma.SortOrder
+  bowType?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -511,6 +551,8 @@ export type ShootingProgressMaxOrderByAggregateInput = {
   score?: Prisma.SortOrder
   maxScore?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
+  endsData?: Prisma.SortOrder
+  bowType?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -526,6 +568,8 @@ export type ShootingProgressMinOrderByAggregateInput = {
   score?: Prisma.SortOrder
   maxScore?: Prisma.SortOrder
   accuracy?: Prisma.SortOrder
+  endsData?: Prisma.SortOrder
+  bowType?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -590,6 +634,8 @@ export type ShootingProgressCreateWithoutUserInput = {
   score?: number | null
   maxScore?: number | null
   accuracy?: number | null
+  endsData?: string | null
+  bowType?: string | null
   notes?: string | null
   imageUrl?: string | null
   createdAt?: Date | string
@@ -604,6 +650,8 @@ export type ShootingProgressUncheckedCreateWithoutUserInput = {
   score?: number | null
   maxScore?: number | null
   accuracy?: number | null
+  endsData?: string | null
+  bowType?: string | null
   notes?: string | null
   imageUrl?: string | null
   createdAt?: Date | string
@@ -647,6 +695,8 @@ export type ShootingProgressScalarWhereInput = {
   score?: Prisma.IntNullableFilter<"ShootingProgress"> | number | null
   maxScore?: Prisma.IntNullableFilter<"ShootingProgress"> | number | null
   accuracy?: Prisma.FloatNullableFilter<"ShootingProgress"> | number | null
+  endsData?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
+  bowType?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
   notes?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"ShootingProgress"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ShootingProgress"> | Date | string
@@ -661,6 +711,8 @@ export type ShootingProgressCreateManyUserInput = {
   score?: number | null
   maxScore?: number | null
   accuracy?: number | null
+  endsData?: string | null
+  bowType?: string | null
   notes?: string | null
   imageUrl?: string | null
   createdAt?: Date | string
@@ -675,6 +727,8 @@ export type ShootingProgressUpdateWithoutUserInput = {
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  endsData?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bowType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -689,6 +743,8 @@ export type ShootingProgressUncheckedUpdateWithoutUserInput = {
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  endsData?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bowType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -703,6 +759,8 @@ export type ShootingProgressUncheckedUpdateManyWithoutUserInput = {
   score?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   maxScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   accuracy?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  endsData?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bowType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -720,6 +778,8 @@ export type ShootingProgressSelect<ExtArgs extends runtime.Types.Extensions.Inte
   score?: boolean
   maxScore?: boolean
   accuracy?: boolean
+  endsData?: boolean
+  bowType?: boolean
   notes?: boolean
   imageUrl?: boolean
   createdAt?: boolean
@@ -736,6 +796,8 @@ export type ShootingProgressSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   score?: boolean
   maxScore?: boolean
   accuracy?: boolean
+  endsData?: boolean
+  bowType?: boolean
   notes?: boolean
   imageUrl?: boolean
   createdAt?: boolean
@@ -752,6 +814,8 @@ export type ShootingProgressSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   score?: boolean
   maxScore?: boolean
   accuracy?: boolean
+  endsData?: boolean
+  bowType?: boolean
   notes?: boolean
   imageUrl?: boolean
   createdAt?: boolean
@@ -768,12 +832,14 @@ export type ShootingProgressSelectScalar = {
   score?: boolean
   maxScore?: boolean
   accuracy?: boolean
+  endsData?: boolean
+  bowType?: boolean
   notes?: boolean
   imageUrl?: boolean
   createdAt?: boolean
 }
 
-export type ShootingProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "bookingId" | "date" | "distance" | "arrowsShot" | "score" | "maxScore" | "accuracy" | "notes" | "imageUrl" | "createdAt", ExtArgs["result"]["shootingProgress"]>
+export type ShootingProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "bookingId" | "date" | "distance" | "arrowsShot" | "score" | "maxScore" | "accuracy" | "endsData" | "bowType" | "notes" | "imageUrl" | "createdAt", ExtArgs["result"]["shootingProgress"]>
 export type ShootingProgressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -799,6 +865,8 @@ export type $ShootingProgressPayload<ExtArgs extends runtime.Types.Extensions.In
     score: number | null
     maxScore: number | null
     accuracy: number | null
+    endsData: string | null
+    bowType: string | null
     notes: string | null
     imageUrl: string | null
     createdAt: Date
@@ -1235,6 +1303,8 @@ export interface ShootingProgressFieldRefs {
   readonly score: Prisma.FieldRef<"ShootingProgress", 'Int'>
   readonly maxScore: Prisma.FieldRef<"ShootingProgress", 'Int'>
   readonly accuracy: Prisma.FieldRef<"ShootingProgress", 'Float'>
+  readonly endsData: Prisma.FieldRef<"ShootingProgress", 'String'>
+  readonly bowType: Prisma.FieldRef<"ShootingProgress", 'String'>
   readonly notes: Prisma.FieldRef<"ShootingProgress", 'String'>
   readonly imageUrl: Prisma.FieldRef<"ShootingProgress", 'String'>
   readonly createdAt: Prisma.FieldRef<"ShootingProgress", 'DateTime'>

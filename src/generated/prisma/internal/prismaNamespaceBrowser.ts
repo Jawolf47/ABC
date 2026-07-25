@@ -333,6 +333,8 @@ export const ShootingProgressScalarFieldEnum = {
   score: 'score',
   maxScore: 'maxScore',
   accuracy: 'accuracy',
+  endsData: 'endsData',
+  bowType: 'bowType',
   notes: 'notes',
   imageUrl: 'imageUrl',
   createdAt: 'createdAt'

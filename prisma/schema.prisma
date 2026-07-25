@@ -252,6 +252,8 @@ model ShootingProgress {
   score       Int?
   maxScore    Int?
   accuracy    Float?
+  endsData    String?
+  bowType     String?
   notes       String?
   imageUrl    String?
   createdAt   DateTime  @default(now())
