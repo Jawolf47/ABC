@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useMemo } from "react"
+import { useSession } from "next-auth/react"
 import { Loader2, Plus, Trash2, Target, X, Check, ChevronDown, ChevronUp, AlertTriangle, Info, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -175,6 +176,8 @@ function MiniScorecard({ endsData }: { endsData: number[][] }) {
 }
 
 export function ShootingProgress() {
+  const { data: session } = useSession()
+  const isAdmin = session?.user?.role === "admin"
   const [entries, setEntries] = useState<ProgressEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -547,9 +550,11 @@ export function ShootingProgress() {
                     )}
                     {e.notes && <p className="mt-1 text-xs text-zinc-500 truncate">{e.notes}</p>}
                   </div>
-                  <button onClick={() => handleDelete(e.id)} className="shrink-0 rounded p-1 text-zinc-600 hover:bg-red-900/30 hover:text-red-400">
-                    <Trash2 className="h-4 w-4" />
-                  </button>
+                  {isAdmin && (
+                    <button onClick={() => handleDelete(e.id)} className="shrink-0 rounded p-1 text-zinc-600 hover:bg-red-900/30 hover:text-red-400">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  )}
                 </div>
               </div>
             )

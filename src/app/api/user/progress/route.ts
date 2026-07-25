@@ -76,6 +76,10 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
+  if (session.user.role !== "admin") {
+    return NextResponse.json({ error: "Only admins can delete progress entries" }, { status: 403 })
+  }
+
   const { searchParams } = new URL(req.url)
   const id = searchParams.get("id")
   if (!id) {
@@ -83,7 +87,7 @@ export async function DELETE(req: NextRequest) {
   }
 
   const entry = await prisma.shootingProgress.findUnique({ where: { id } })
-  if (!entry || entry.userId !== session.user.id) {
+  if (!entry) {
     return NextResponse.json({ error: "Not found" }, { status: 404 })
   }
 
