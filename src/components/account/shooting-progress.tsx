@@ -273,6 +273,8 @@ export function ShootingProgress() {
     }
 
     setSaving(false)
+    setShowForm(false)
+    resetForm()
     fetchEntries()
   }
 
