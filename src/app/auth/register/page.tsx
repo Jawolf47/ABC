@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
-import { Target } from "lucide-react"
+import { Target, Shield, Clock, Gift, Star, Zap } from "lucide-react"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -47,9 +47,34 @@ export default function RegisterPage() {
     }
   }
 
+  const perks = [
+    { icon: Star, label: "10% off all archery sessions & store gear" },
+    { icon: Clock, label: "Priority booking — reserve your lane before the public" },
+    { icon: Gift, label: "Birthday discount & exclusive member deals" },
+    { icon: Zap, label: "Early access to tournaments & special events" },
+    { icon: Shield, label: "Order history & loyalty rewards tracking" },
+  ]
+
   return (
-    <div className="mx-auto flex min-h-[60vh] max-w-md items-center px-4 py-20">
-      <Card className="w-full">
+    <div className="mx-auto flex min-h-[60vh] max-w-4xl flex-col items-center gap-8 px-4 py-20 lg:flex-row lg:items-center lg:gap-12">
+      <div className="w-full max-w-md flex-1">
+        <div className="rounded-2xl bg-zinc-900 p-6 text-white sm:p-8">
+          <Target className="h-10 w-10 text-amber-500" />
+          <h2 className="mt-4 text-2xl font-bold">Why join?</h2>
+          <ul className="mt-6 space-y-4">
+            {perks.map((p) => (
+              <li key={p.label} className="flex items-start gap-3">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-500/20">
+                  <p.icon className="h-4 w-4 text-amber-500" />
+                </div>
+                <span className="text-sm leading-relaxed text-zinc-300">{p.label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <Card className="w-full max-w-md">
         <div className="mb-6 text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-100">
             <Target className="h-6 w-6 text-amber-600" />

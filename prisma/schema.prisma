@@ -49,6 +49,15 @@ model User {
   password  String?
   image     String?
   role      String    @default("customer")
+
+  phone       String?
+  street      String?
+  city        String?
+  state       String?
+  zip         String?
+  guestsTypical Int?
+  birthDate   String?
+
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
@@ -57,6 +66,7 @@ model User {
   bookings        Booking[]
   eventRegistrations EventRegistration[]
   orders          Order[]
+  progress        ShootingProgress[]
 }
 
 model Category {
@@ -73,6 +83,7 @@ model Product {
   price         Float
   comparePrice  Float?
   images        String   @default("[]")
+  variants      String   @default("[]")
   categoryId    String
   category      Category @relation(fields: [categoryId], references: [id])
   inventory     Int      @default(0)
@@ -97,9 +108,13 @@ model Booking {
   guests     Int      @default(1)
   type       String   @default("individual")
   status     String   @default("confirmed")
+  payment    String   @default("unpaid")
+  total      Float?
   notes      String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  equipmentUsages EquipmentUsage[]
 }
 
 model Event {
@@ -158,4 +173,86 @@ model OrderItem {
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
   price     Float
+  size      String?
+  color     String?
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  date        DateTime
+  category    String
+  description String
+  amount      Float
+  miles       Float?
+  notes       String?
+  adminId     String?
+  adminName   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Equipment {
+  id            String   @id @default(cuid())
+  name          String
+  category      String
+  quantity      Int      @default(1)
+  condition     String   @default("good")
+  purchaseDate  DateTime?
+  purchaseCost  Float?
+  currentValue  Float?
+  serialNumber  String?
+  notes         String?
+  active        Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  logs    EquipmentLog[]
+  usages  EquipmentUsage[]
+}
+
+model EquipmentLog {
+  id          String   @id @default(cuid())
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+  date        DateTime
+  type        String
+  description String
+  quantity    Int      @default(0)
+  notes       String?
+  createdAt   DateTime @default(now())
+}
+
+model EquipmentUsage {
+  id              String    @id @default(cuid())
+  equipmentId     String
+  equipment       Equipment @relation(fields: [equipmentId], references: [id], onDelete: Cascade)
+  bookingId       String?
+  booking         Booking?  @relation(fields: [bookingId], references: [id])
+  eventName       String?
+  date            DateTime
+  checkedOutBy    String
+  quantityOut     Int       @default(1)
+  checkedOutAt    DateTime  @default(now())
+  returnedAt      DateTime?
+  conditionOut    String    @default("good")
+  returnedBy      String?
+  conditionIn     String?
+  notes           String?
+  createdAt       DateTime  @default(now())
+}
+
+model ShootingProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookingId   String?
+  date        DateTime
+  distance    Int?
+  arrowsShot  Int       @default(0)
+  score       Int?
+  maxScore    Int?
+  accuracy    Float?
+  notes       String?
+  imageUrl    String?
+  createdAt   DateTime  @default(now())
 }

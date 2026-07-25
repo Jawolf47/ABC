@@ -96,3 +96,28 @@ export type Order = Prisma.OrderModel
  * 
  */
 export type OrderItem = Prisma.OrderItemModel
+/**
+ * Model Expense
+ * 
+ */
+export type Expense = Prisma.ExpenseModel
+/**
+ * Model Equipment
+ * 
+ */
+export type Equipment = Prisma.EquipmentModel
+/**
+ * Model EquipmentLog
+ * 
+ */
+export type EquipmentLog = Prisma.EquipmentLogModel
+/**
+ * Model EquipmentUsage
+ * 
+ */
+export type EquipmentUsage = Prisma.EquipmentUsageModel
+/**
+ * Model ShootingProgress
+ * 
+ */
+export type ShootingProgress = Prisma.ShootingProgressModel

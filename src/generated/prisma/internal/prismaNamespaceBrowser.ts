@@ -61,7 +61,12 @@ export const ModelName = {
   Event: 'Event',
   EventRegistration: 'EventRegistration',
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  Expense: 'Expense',
+  Equipment: 'Equipment',
+  EquipmentLog: 'EquipmentLog',
+  EquipmentUsage: 'EquipmentUsage',
+  ShootingProgress: 'ShootingProgress'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -121,6 +126,13 @@ export const UserScalarFieldEnum = {
   password: 'password',
   image: 'image',
   role: 'role',
+  phone: 'phone',
+  street: 'street',
+  city: 'city',
+  state: 'state',
+  zip: 'zip',
+  guestsTypical: 'guestsTypical',
+  birthDate: 'birthDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -144,6 +156,7 @@ export const ProductScalarFieldEnum = {
   price: 'price',
   comparePrice: 'comparePrice',
   images: 'images',
+  variants: 'variants',
   categoryId: 'categoryId',
   inventory: 'inventory',
   featured: 'featured',
@@ -167,6 +180,8 @@ export const BookingScalarFieldEnum = {
   guests: 'guests',
   type: 'type',
   status: 'status',
+  payment: 'payment',
+  total: 'total',
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -230,10 +245,100 @@ export const OrderItemScalarFieldEnum = {
   orderId: 'orderId',
   productId: 'productId',
   quantity: 'quantity',
-  price: 'price'
+  price: 'price',
+  size: 'size',
+  color: 'color'
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
+
+
+export const ExpenseScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  category: 'category',
+  description: 'description',
+  amount: 'amount',
+  miles: 'miles',
+  notes: 'notes',
+  adminId: 'adminId',
+  adminName: 'adminName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExpenseScalarFieldEnum = (typeof ExpenseScalarFieldEnum)[keyof typeof ExpenseScalarFieldEnum]
+
+
+export const EquipmentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  quantity: 'quantity',
+  condition: 'condition',
+  purchaseDate: 'purchaseDate',
+  purchaseCost: 'purchaseCost',
+  currentValue: 'currentValue',
+  serialNumber: 'serialNumber',
+  notes: 'notes',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EquipmentScalarFieldEnum = (typeof EquipmentScalarFieldEnum)[keyof typeof EquipmentScalarFieldEnum]
+
+
+export const EquipmentLogScalarFieldEnum = {
+  id: 'id',
+  equipmentId: 'equipmentId',
+  date: 'date',
+  type: 'type',
+  description: 'description',
+  quantity: 'quantity',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type EquipmentLogScalarFieldEnum = (typeof EquipmentLogScalarFieldEnum)[keyof typeof EquipmentLogScalarFieldEnum]
+
+
+export const EquipmentUsageScalarFieldEnum = {
+  id: 'id',
+  equipmentId: 'equipmentId',
+  bookingId: 'bookingId',
+  eventName: 'eventName',
+  date: 'date',
+  checkedOutBy: 'checkedOutBy',
+  quantityOut: 'quantityOut',
+  checkedOutAt: 'checkedOutAt',
+  returnedAt: 'returnedAt',
+  conditionOut: 'conditionOut',
+  returnedBy: 'returnedBy',
+  conditionIn: 'conditionIn',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type EquipmentUsageScalarFieldEnum = (typeof EquipmentUsageScalarFieldEnum)[keyof typeof EquipmentUsageScalarFieldEnum]
+
+
+export const ShootingProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  bookingId: 'bookingId',
+  date: 'date',
+  distance: 'distance',
+  arrowsShot: 'arrowsShot',
+  score: 'score',
+  maxScore: 'maxScore',
+  accuracy: 'accuracy',
+  notes: 'notes',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt'
+} as const
+
+export type ShootingProgressScalarFieldEnum = (typeof ShootingProgressScalarFieldEnum)[keyof typeof ShootingProgressScalarFieldEnum]
 
 
 export const SortOrder = {

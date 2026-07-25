@@ -8,10 +8,14 @@ import { Trash2, ShoppingBag, ArrowLeft } from "lucide-react"
 import { formatPrice } from "@/lib/utils"
 
 interface CartItem {
+  itemKey: string
   id: string
   name: string
   price: number
   quantity: number
+  size?: string | null
+  color?: string | null
+  originalPrice?: number
 }
 
 export default function CartPage() {
@@ -30,10 +34,10 @@ export default function CartPage() {
     setItems(JSON.parse(localStorage.getItem("cart") || "[]"))
   }
 
-  function updateQuantity(id: string, delta: number) {
+  function updateQuantity(itemKey: string, delta: number) {
     const newItems = items
       .map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(0, item.quantity + delta) } : item
+        item.itemKey === itemKey ? { ...item, quantity: Math.max(0, item.quantity + delta) } : item
       )
       .filter((item) => item.quantity > 0)
     setItems(newItems)
@@ -41,14 +45,15 @@ export default function CartPage() {
     window.dispatchEvent(new Event("cart-updated"))
   }
 
-  function removeItem(id: string) {
-    const newItems = items.filter((item) => item.id !== id)
+  function removeItem(itemKey: string) {
+    const newItems = items.filter((item) => item.itemKey !== itemKey)
     setItems(newItems)
     localStorage.setItem("cart", JSON.stringify(newItems))
     window.dispatchEvent(new Event("cart-updated"))
   }
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const hasMemberDiscount = items.some((item) => item.originalPrice)
 
   if (!mounted) return null
 
@@ -71,21 +76,35 @@ export default function CartPage() {
         <>
           <div className="mt-8 space-y-4">
             {items.map((item) => (
-              <Card key={item.id} padding="sm" className="flex items-center gap-4">
+              <Card key={item.itemKey} padding="sm" className="flex items-center gap-4">
                 <div className="flex-1">
                   <h3 className="font-medium text-zinc-900">{item.name}</h3>
-                  <p className="text-sm text-zinc-500">{formatPrice(item.price)} each</p>
+                  {(item.color || item.size) && (
+                    <p className="text-sm text-zinc-400">
+                      {item.color}{item.color && item.size ? " / " : ""}{item.size}
+                    </p>
+                  )}
+                  <p className="text-sm text-zinc-500">
+                    {item.originalPrice ? (
+                      <>
+                        <span className="text-zinc-400 line-through">{formatPrice(item.originalPrice)}</span>{" "}
+                        <span className="text-amber-600">{formatPrice(item.price)}</span>
+                      </>
+                    ) : (
+                      <>{formatPrice(item.price)} each</>
+                    )}
+                  </p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
-                    onClick={() => updateQuantity(item.id, -1)}
+                    onClick={() => updateQuantity(item.itemKey, -1)}
                     className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-300 text-zinc-600 hover:bg-zinc-100"
                   >
                     -
                   </button>
                   <span className="w-8 text-center font-medium">{item.quantity}</span>
                   <button
-                    onClick={() => updateQuantity(item.id, 1)}
+                    onClick={() => updateQuantity(item.itemKey, 1)}
                     className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-300 text-zinc-600 hover:bg-zinc-100"
                   >
                     +
@@ -95,7 +114,7 @@ export default function CartPage() {
                   {formatPrice(item.price * item.quantity)}
                 </p>
                 <button
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => removeItem(item.itemKey)}
                   className="rounded-lg p-2 text-zinc-400 hover:bg-red-50 hover:text-red-600"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -105,6 +124,11 @@ export default function CartPage() {
           </div>
 
           <div className="mt-8 rounded-xl border border-zinc-200 bg-white p-6">
+            {hasMemberDiscount && (
+              <div className="mb-4 rounded-lg bg-amber-50 px-4 py-2 text-sm text-amber-700">
+                Member discount (10%) applied to eligible items.
+              </div>
+            )}
             <div className="flex items-center justify-between">
               <span className="text-lg font-semibold text-zinc-900">Total</span>
               <span className="text-2xl font-bold text-amber-600">{formatPrice(total)}</span>

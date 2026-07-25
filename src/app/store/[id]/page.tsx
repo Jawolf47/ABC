@@ -1,27 +1,49 @@
-import { prisma } from "@/lib/db"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { formatPrice } from "@/lib/utils"
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import { ArrowLeft, ShoppingCart, Shield, Target } from "lucide-react"
-import { AddToCartButton } from "./add-to-cart-button"
+"use client"
 
-interface ProductPageProps {
-  params: Promise<{ id: string }>
+import { useState, useEffect } from "react"
+import { useSession } from "next-auth/react"
+import { Badge } from "@/components/ui/badge"
+import { notFound, useParams } from "next/navigation"
+import Link from "next/link"
+import { ArrowLeft, Shield, Shirt, Target } from "lucide-react"
+import { ProductActions } from "./product-actions"
+
+const MEMBER_DISCOUNT = 0.1
+
+const categoryIcons: Record<string, typeof Target> = {
+  archery: Target,
+  survival: Shield,
+  apparel: Shirt,
 }
 
-export default async function ProductPage({ params }: ProductPageProps) {
-  const { id } = await params
-  const product = await prisma.product.findUnique({
-    where: { id },
-    include: { category: true },
-  })
+export default function ProductPage() {
+  const { data: session } = useSession()
+  const params = useParams()
+  const [product, setProduct] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+    fetch(`/api/products?id=${params.id}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (!data) { setLoading(false); return }
+        setProduct(Array.isArray(data) ? data[0] : data)
+        setLoading(false)
+      })
+  }, [params.id])
+
+  if (loading) return <div className="mx-auto max-w-7xl px-4 py-20 text-center text-zinc-500">Loading...</div>
   if (!product) notFound()
 
-  const images = JSON.parse(product.images) as string[]
+  const images = JSON.parse(product.images || "[]") as string[]
+  const variants = JSON.parse(product.variants || "[]") as { color: string; sizes: string[] }[]
+  const Icon = categoryIcons[product.category?.slug] || Target
+
+  function formatPrice(price: number) {
+    return `$${price.toFixed(2)}`
+  }
+
+  const discPrice = session ? product.price * (1 - MEMBER_DISCOUNT) : product.price
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -42,29 +64,37 @@ export default async function ProductPage({ params }: ProductPageProps) {
             />
           ) : (
             <div className="flex h-full items-center justify-center">
-              {product.category.slug === "archery" ? (
-                <Target className="h-20 w-20 text-zinc-300" />
-              ) : (
-                <Shield className="h-20 w-20 text-zinc-300" />
-              )}
+              <Icon className="h-20 w-20 text-zinc-300" />
             </div>
           )}
         </div>
 
         <div>
-          <Badge variant="primary" className="mb-4 capitalize">
-            {product.category.name}
-          </Badge>
+          {product.category?.name && (
+            <Badge variant="primary" className="mb-4 capitalize">
+              {product.category.name}
+            </Badge>
+          )}
           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
             {product.name}
           </h1>
           <div className="mt-4 flex items-baseline gap-3">
             <span className="text-3xl font-bold text-amber-600">
-              {formatPrice(product.price)}
+              {formatPrice(discPrice)}
             </span>
-            {product.comparePrice && (
+            {session && discPrice !== product.price && (
+              <span className="text-lg text-zinc-400 line-through">
+                {formatPrice(product.price)}
+              </span>
+            )}
+            {!session && product.comparePrice && (
               <span className="text-lg text-zinc-400 line-through">
                 {formatPrice(product.comparePrice)}
+              </span>
+            )}
+            {session && (
+              <span className="rounded bg-amber-100 px-2 py-0.5 text-xs font-bold uppercase text-amber-700">
+                -{Math.round(MEMBER_DISCOUNT * 100)}%
               </span>
             )}
           </div>
@@ -85,9 +115,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <AddToCartButton product={product} />
-          </div>
+          <ProductActions product={product} variants={variants} />
         </div>
       </div>
     </div>

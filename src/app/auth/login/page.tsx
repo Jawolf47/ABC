@@ -43,7 +43,7 @@ export default function LoginPage() {
             <Target className="h-6 w-6 text-amber-600" />
           </div>
           <h1 className="mt-4 text-2xl font-bold text-zinc-900">Welcome Back</h1>
-          <p className="mt-1 text-zinc-600">Sign in to your Alpha Bear Club account</p>
+          <p className="mt-1 text-zinc-600">Sign in to unlock your 10% member discount</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input

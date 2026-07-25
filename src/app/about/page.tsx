@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Target, Shield, Users, Clock, Mail, MapPin, Phone } from "lucide-react"
+import { Target, Shield, Users, Clock, Mail, Phone } from "lucide-react"
 
 export default function AboutPage() {
   return (
@@ -57,18 +57,11 @@ export default function AboutPage() {
           </p>
           <div className="mt-8 space-y-4">
             <div className="flex items-start gap-3">
-              <MapPin className="mt-1 h-5 w-5 shrink-0 text-amber-600" />
-              <div>
-                <p className="font-medium text-zinc-900">Location</p>
-                <p className="text-zinc-600">123 Archery Lane, Your City, ST 12345</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
               <Clock className="mt-1 h-5 w-5 shrink-0 text-amber-600" />
               <div>
                 <p className="font-medium text-zinc-900">Hours</p>
-                <p className="text-zinc-600">Monday - Saturday: 9 AM - 8 PM</p>
-                <p className="text-zinc-600">Sunday: 10 AM - 5 PM</p>
+                <p className="text-zinc-600">Saturday: 10 AM - 4 PM</p>
+                <p className="text-zinc-600">Sunday: 10 AM - 4 PM</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -95,7 +88,17 @@ export default function AboutPage() {
             </Link>
           </div>
         </div>
-        <div className="aspect-square rounded-2xl bg-zinc-200" />
+        <div className="overflow-hidden rounded-2xl border border-zinc-200">
+          <iframe
+            src="https://maps.google.com/maps?q=Michigan&t=&z=8&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="100%"
+            style={{ border: 0, minHeight: "400px" }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
       </section>
     </div>
   )

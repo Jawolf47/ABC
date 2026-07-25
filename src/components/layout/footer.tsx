@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Target, Shield, Clock, Mail, Phone, MapPin } from "lucide-react"
+import { Target, Shield, Clock, Mail, Phone } from "lucide-react"
 
 const footerLinks = {
   Shop: [
@@ -26,9 +26,6 @@ export function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-600">
-                <span className="text-lg font-bold text-white">ABC</span>
-              </div>
               <span className="text-lg font-bold text-white">Alpha Bear Club</span>
             </div>
             <p className="mt-3 text-sm leading-relaxed">
@@ -68,12 +65,8 @@ export function Footer() {
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-zinc-800 pt-8 sm:flex-row">
           <div className="flex flex-wrap items-center gap-4 text-sm">
             <div className="flex items-center gap-1">
-              <MapPin className="h-3.5 w-3.5 text-amber-500" />
-              <span>Your City, ST</span>
-            </div>
-            <div className="flex items-center gap-1">
               <Clock className="h-3.5 w-3.5 text-amber-500" />
-              <span>Mon-Sat 9AM-8PM</span>
+              <span>Sat-Sun 10AM-4PM</span>
             </div>
             <div className="flex items-center gap-1">
               <Mail className="h-3.5 w-3.5 text-amber-500" />

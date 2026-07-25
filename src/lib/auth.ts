@@ -21,7 +21,7 @@ export async function verifyPassword(password: string, hash: string) {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
   pages: {
     signIn: "/auth/login",
   },
@@ -63,6 +63,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.role = (user as { role: string }).role
         token.id = user.id
+      }
+      const where = token.id ? { id: token.id as string } : token.email ? { email: token.email as string } : null
+      if (where) {
+        const dbUser = await prisma.user.findUnique({ where, select: { role: true } })
+        if (dbUser) token.role = dbUser.role
       }
       return token
     },
