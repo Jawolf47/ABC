@@ -181,7 +181,8 @@ export function ShootingProgress() {
   const [saving, setSaving] = useState(false)
   const [expandedId, setExpandedId] = useState<string | null>(null)
 
-  const [date, setDate] = useState(toDateString(new Date()))
+  const [bookings, setBookings] = useState<{ id: string; date: string; timeSlot: string; type: string; status: string }[]>([])
+  const [selectedBookingId, setSelectedBookingId] = useState("")
   const [distance, setDistance] = useState("")
   const [bowType, setBowType] = useState("")
   const [arrowsPerEnd, setArrowsPerEnd] = useState(6)
@@ -189,6 +190,7 @@ export function ShootingProgress() {
   const [activeEnd, setActiveEnd] = useState(0)
   const [notes, setNotes] = useState("")
   const [lastFeedback, setLastFeedback] = useState<{ id: string; feedback: FeedbackResult } | null>(null)
+
   const fetchEntries = () => {
     fetch("/api/user/progress")
       .then((r) => r.json())
@@ -199,7 +201,20 @@ export function ShootingProgress() {
       .catch(() => setLoading(false))
   }
 
+  const fetchBookings = () => {
+    fetch("/api/user/bookings")
+      .then((r) => r.json())
+      .then((data) => {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        const valid = (data.bookings || []).filter((b: { status: string }) => b.status !== "cancelled")
+        setBookings(valid)
+      })
+      .catch(() => {})
+  }
+
   useEffect(() => { fetchEntries() }, [])
+  useEffect(() => { if (showForm) fetchBookings() }, [showForm])
 
   const currentEnd = ends[activeEnd] || []
   const isComplete = currentEnd.length >= arrowsPerEnd
@@ -209,7 +224,7 @@ export function ShootingProgress() {
   const maxScore = totalArrows * 10
 
   const resetForm = () => {
-    setDate(toDateString(new Date()))
+    setSelectedBookingId("")
     setDistance("")
     setBowType("")
     setArrowsPerEnd(6)
@@ -247,6 +262,7 @@ export function ShootingProgress() {
 
   const handleSubmit = async () => {
     if (!allEndsComplete && totalArrows === 0) return
+    if (!selectedBookingId) return
     setSaving(true)
     const validEnds = ends.filter((e) => e.length > 0)
 
@@ -261,7 +277,7 @@ export function ShootingProgress() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        date,
+        bookingId: selectedBookingId,
         distance: distance ? Number(distance) : null,
         bowType: bowType || null,
         endsData: validEnds,
@@ -336,9 +352,29 @@ export function ShootingProgress() {
       {showForm && (
         <div className="mb-4 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4">
           <div className="mb-3 grid gap-3 sm:grid-cols-3">
-            <div>
-              <label className="text-xs text-zinc-500">Date</label>
-              <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="border-zinc-600 bg-zinc-900 text-sm text-white" />
+            <div className="sm:col-span-3">
+              <label className="text-xs text-zinc-500">Select Booking</label>
+              {bookings.length === 0 ? (
+                <p className="mt-1 text-xs text-zinc-500">No bookings found. <a href="/booking" className="text-amber-500 hover:underline">Book a session first</a>.</p>
+              ) : (
+                <select
+                  value={selectedBookingId}
+                  onChange={(e) => setSelectedBookingId(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white"
+                >
+                  <option value="">Choose a booking...</option>
+                  {bookings.map((b) => {
+                    const parts = b.date.split("T")[0].split("-")
+                    const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
+                    const label = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" })
+                    return (
+                      <option key={b.id} value={b.id}>
+                        {label} — {b.timeSlot} ({b.type})
+                      </option>
+                    )
+                  })}
+                </select>
+              )}
             </div>
             <div>
               <label className="text-xs text-zinc-500">Distance (yards)</label>
@@ -445,7 +481,7 @@ export function ShootingProgress() {
           </div>
 
           <div className="flex gap-2">
-            <Button size="sm" className="bg-amber-600 hover:bg-amber-700" onClick={handleSubmit} disabled={saving || totalArrows === 0}>
+            <Button size="sm" className="bg-amber-600 hover:bg-amber-700" onClick={handleSubmit} disabled={saving || totalArrows === 0 || !selectedBookingId}>
               {saving ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : <Check className="mr-1 h-3 w-3" />}
               Save & Analyze
             </Button>

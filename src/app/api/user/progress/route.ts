@@ -22,18 +22,25 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json()
-  const { date, distance, arrowsShot, score, maxScore, notes, imageUrl, bookingId, endsData, bowType } = body
+  const { distance, notes, bookingId, endsData, bowType } = body
 
-  if (!date) {
-    return NextResponse.json({ error: "Date is required" }, { status: 400 })
+  if (!bookingId) {
+    return NextResponse.json({ error: "Booking is required" }, { status: 400 })
   }
 
-  const [y, m, d] = date.split("-").map(Number)
-  const entryDate = new Date(y, m - 1, d)
+  const booking = await prisma.booking.findUnique({ where: { id: bookingId } })
+  if (!booking) {
+    return NextResponse.json({ error: "Booking not found" }, { status: 404 })
+  }
+  if (booking.userId !== session.user.id) {
+    return NextResponse.json({ error: "Not your booking" }, { status: 403 })
+  }
 
-  let finalScore = score ? Number(score) : null
-  let finalMaxScore = maxScore ? Number(maxScore) : null
-  let finalArrowsShot = arrowsShot ? Number(arrowsShot) : 0
+  const entryDate = booking.date
+
+  let finalScore: number | null = null
+  let finalMaxScore: number | null = null
+  let finalArrowsShot = 0
 
   if (endsData && Array.isArray(endsData) && endsData.length > 0) {
     const allArrows = endsData.flat()
@@ -47,7 +54,7 @@ export async function POST(req: NextRequest) {
   const entry = await prisma.shootingProgress.create({
     data: {
       userId: session.user.id,
-      bookingId: bookingId || null,
+      bookingId,
       date: entryDate,
       distance: distance ? Number(distance) : null,
       arrowsShot: finalArrowsShot,
@@ -57,7 +64,6 @@ export async function POST(req: NextRequest) {
       endsData: endsData ? JSON.stringify(endsData) : null,
       bowType: bowType || null,
       notes: notes || null,
-      imageUrl: imageUrl || null,
     },
   })
 
