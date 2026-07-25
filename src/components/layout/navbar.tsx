@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { useSession, signOut } from "next-auth/react"
-import { Menu, X, ShoppingCart, User, LogOut, Calendar, Package, Settings, Shield, GraduationCap } from "lucide-react"
+import { Menu, X, ShoppingCart, User, LogOut, Calendar, Package, Settings, Shield, GraduationCap, Target } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -97,6 +97,22 @@ export function Navbar() {
                       <Settings className="h-4 w-4" />
                       My Account
                     </Link>
+                    <Link
+                      href="/account/bookings"
+                      onClick={() => setShowMenu(false)}
+                      className="flex w-full items-center gap-2 px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-800 hover:text-white"
+                    >
+                      <Calendar className="h-4 w-4" />
+                      My Bookings
+                    </Link>
+                    <Link
+                      href="/account/progress"
+                      onClick={() => setShowMenu(false)}
+                      className="flex w-full items-center gap-2 px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-800 hover:text-white"
+                    >
+                      <Target className="h-4 w-4" />
+                      My Progress
+                    </Link>
                     {session.user?.role === "admin" && (
                       <Link
                         href="/admin"
@@ -154,7 +170,7 @@ export function Navbar() {
       <div
         className={cn(
           "overflow-hidden border-t border-zinc-800 bg-zinc-950 transition-all duration-300 md:hidden",
-          open ? "max-h-[500px]" : "max-h-0"
+          open ? "max-h-[600px]" : "max-h-0"
         )}
         >
           <nav className="flex flex-col gap-1 px-4 pb-4 pt-2">
@@ -184,6 +200,22 @@ export function Navbar() {
                 >
                   <Settings className="h-4 w-4" />
                   My Account
+                </Link>
+                <Link
+                  href="/account/bookings"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"
+                >
+                  <Calendar className="h-4 w-4" />
+                  My Bookings
+                </Link>
+                <Link
+                  href="/account/progress"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"
+                >
+                  <Target className="h-4 w-4" />
+                  My Progress
                 </Link>
                 {session.user?.role === "admin" && (
                   <Link
