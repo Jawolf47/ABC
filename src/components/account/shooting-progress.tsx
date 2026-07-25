@@ -189,7 +189,7 @@ export function ShootingProgress() {
   const [ends, setEnds] = useState<number[][]>([[]])
   const [activeEnd, setActiveEnd] = useState(0)
   const [notes, setNotes] = useState("")
-  const [lastFeedback, setLastFeedback] = useState<{ id: string; feedback: FeedbackResult } | null>(null)
+  const [lastSavedId, setLastSavedId] = useState<string | null>(null)
 
   const fetchEntries = () => {
     fetch("/api/user/progress")
@@ -288,7 +288,7 @@ export function ShootingProgress() {
     resetForm()
 
     if (result && saved?.id) {
-      setLastFeedback({ id: saved.id, feedback: result })
+      setLastSavedId(saved.id)
       setExpandedId(saved.id)
     }
 
@@ -538,8 +538,8 @@ export function ShootingProgress() {
                         {expandedId === e.id && (
                           <div className="mt-2 space-y-3">
                             <MiniScorecard endsData={parsedEnds} />
-                            {lastFeedback?.id === e.id && (
-                              <FeedbackPanel feedback={lastFeedback.feedback} />
+                            {parsedEnds.length > 0 && (
+                              <FeedbackPanel feedback={analyzeScorecard(parsedEnds)} />
                             )}
                           </div>
                         )}
