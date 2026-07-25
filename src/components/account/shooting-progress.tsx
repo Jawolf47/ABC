@@ -202,13 +202,10 @@ export function ShootingProgress() {
   }
 
   const fetchBookings = () => {
-    fetch("/api/user/bookings")
+    fetch("/api/user/bookings/unlogged")
       .then((r) => r.json())
       .then((data) => {
-        const today = new Date()
-        today.setHours(0, 0, 0, 0)
-        const valid = (data.bookings || []).filter((b: { status: string }) => b.status !== "cancelled")
-        setBookings(valid)
+        setBookings(data.bookings || [])
       })
       .catch(() => {})
   }
@@ -355,7 +352,7 @@ export function ShootingProgress() {
             <div className="sm:col-span-3">
               <label className="text-xs text-zinc-500">Select Booking</label>
               {bookings.length === 0 ? (
-                <p className="mt-1 text-xs text-zinc-500">No bookings found. <a href="/booking" className="text-amber-500 hover:underline">Book a session first</a>.</p>
+                <p className="mt-1 text-xs text-zinc-500">No past sessions to log. Attend a booking and come back to track your progress.</p>
               ) : (
                 <select
                   value={selectedBookingId}
