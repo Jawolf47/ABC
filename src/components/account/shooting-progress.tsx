@@ -180,7 +180,6 @@ export function ShootingProgress() {
   const [showForm, setShowForm] = useState(false)
   const [saving, setSaving] = useState(false)
   const [expandedId, setExpandedId] = useState<string | null>(null)
-  const [feedback, setFeedback] = useState<FeedbackResult | null>(null)
 
   const [date, setDate] = useState(toDateString(new Date()))
   const [distance, setDistance] = useState("")
@@ -189,7 +188,7 @@ export function ShootingProgress() {
   const [ends, setEnds] = useState<number[][]>([[]])
   const [activeEnd, setActiveEnd] = useState(0)
   const [notes, setNotes] = useState("")
-
+  const [lastFeedback, setLastFeedback] = useState<{ id: string; feedback: FeedbackResult } | null>(null)
   const fetchEntries = () => {
     fetch("/api/user/progress")
       .then((r) => r.json())
@@ -217,7 +216,6 @@ export function ShootingProgress() {
     setEnds([[]])
     setActiveEnd(0)
     setNotes("")
-    setFeedback(null)
   }
 
   const addScore = (score: number) => {
@@ -252,6 +250,13 @@ export function ShootingProgress() {
     setSaving(true)
     const validEnds = ends.filter((e) => e.length > 0)
 
+    let result: FeedbackResult | null = null
+    try {
+      result = analyzeScorecard(validEnds)
+    } catch {
+      // ignore
+    }
+
     const res = await fetch("/api/user/progress", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -265,16 +270,15 @@ export function ShootingProgress() {
     })
     const saved = await res.json()
 
-    try {
-      const result = analyzeScorecard(validEnds)
-      setFeedback(result)
-    } catch {
-      // ignore
-    }
-
     setSaving(false)
     setShowForm(false)
     resetForm()
+
+    if (result && saved?.id) {
+      setLastFeedback({ id: saved.id, feedback: result })
+      setExpandedId(saved.id)
+    }
+
     fetchEntries()
   }
 
@@ -449,12 +453,6 @@ export function ShootingProgress() {
               Cancel
             </Button>
           </div>
-
-          {feedback && (
-            <div className="mt-4">
-              <FeedbackPanel feedback={feedback} />
-            </div>
-          )}
         </div>
       )}
 
@@ -504,7 +502,14 @@ export function ShootingProgress() {
                           {expandedId === e.id ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                           Scorecard ({parsedEnds.length} ends)
                         </button>
-                        {expandedId === e.id && <MiniScorecard endsData={parsedEnds} />}
+                        {expandedId === e.id && (
+                          <div className="mt-2 space-y-3">
+                            <MiniScorecard endsData={parsedEnds} />
+                            {lastFeedback?.id === e.id && (
+                              <FeedbackPanel feedback={lastFeedback.feedback} />
+                            )}
+                          </div>
+                        )}
                       </>
                     )}
                     {e.notes && <p className="mt-1 text-xs text-zinc-500 truncate">{e.notes}</p>}
